@@ -115,3 +115,12 @@ divide :: Int -> Int -> Int
 divide n m
     | n < m         = 0
     | otherwise     = 1 + divide (n - m) m
+
+
+-- intSquareRoot :: Int -> Int
+intSquareRoot x
+    | (isInt sqrt(x)) == True = x
+    | otherwise     = intSquareRoot (x-1)
+
+-- isInt :: a -> Bool
+isInt x = x == fromInteger(round x)

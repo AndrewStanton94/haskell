@@ -15,10 +15,15 @@ howManyEqual x y z
     | x == y || x == z || y == z    = 2
     | otherwise                     = 0
 
-sumDiagonalLengths :: Float -> Float -> Float -> Float 
-sumDiagonalLengths x y z = diag x + diag y + diag z
+-- sumDiagonalLengths :: Float -> Float -> Float -> Float 
+-- sumDiagonalLengths x y z = diag x + diag y + diag z
+    -- where
+        -- diag a = sqrt(2 * a ^ 2)
+
+sumDiagonalLengths :: Float -> Float -> Float -> Float
+sumDiagonalLengths x y z = diagonal x + diagonal y + diagonal z
     where
-        diag a = sqrt(2 * a ^ 2)
+        diagonal d = sqrt(2 * d ^ 2)
 
 taxiFare :: Int -> Float
 taxiFare d

@@ -19,10 +19,15 @@ distance x1 y1 x2 y2 = sqrt ( dSqr y1 y2 + dSqr x1 x2 )
 threeDifferent :: Int -> Int -> Int -> Bool
 threeDifferent a b c = a /= b && a /= c && b /= c
 
-divisibleBy :: Int -> Int -> Bool
-divisibleBy d b = (d `mod` b) == 0
+--divisibleBy :: Int -> Int -> Bool
+--divisibleBy d b = (d `mod` b) == 0
 -- backticks: function to operator
 -- brackets : operator to function
+
+divisibleBy :: Int -> Int -> Bool
+divisibleBy x y 
+| x `mod` y == 0   = True
+| otherwise        = False
 
 isEven :: Int -> Bool
 isEven i = divisibleBy i 2
