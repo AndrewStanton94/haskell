@@ -59,8 +59,8 @@ onlyDigits strIn = [strOut | strOut <- strIn, isDigit strOut]
 capMarks :: [StudentMark] -> [StudentMark]
 capMarks lst = [capMark student | student <- lst]
 
--- markStudents :: [StudentMark] -> [(String, Char)]
--- markStudents [(student, mark)] = [(student, grade (student, mark)) | student <- lst]
+markStudents :: [StudentMark] -> [(String, Char)]
+markStudents lst = [(student, grade (student, mark)) | (student, mark) <- lst]
 
 duplicate :: String -> Int -> String
 duplicate str lim
@@ -75,6 +75,5 @@ isPrime x
     | length (divisors x) == 2  = True
     | otherwise                 = False -- 1 ! prime
 
-split [(c,d)] = (makeList c, makeList d)
-    where
-        makeList x = [y | y <- x]
+split :: [(c,d)] -> ([c], [d])
+split lst = ([n | (n, m) <- lst], [m |(n,m) <- lst])

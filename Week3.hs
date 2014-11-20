@@ -117,10 +117,9 @@ divide n m
     | otherwise     = 1 + divide (n - m) m
 
 
--- intSquareRoot :: Int -> Int
-intSquareRoot x
-    | (isInt sqrt(x)) == True = x
-    | otherwise     = intSquareRoot (x-1)
-
--- isInt :: a -> Bool
-isInt x = x == fromInteger(round x)
+intSquareRoot :: Int -> Int
+intSquareRoot x = bf x x
+    where
+        bf target try
+            | try * try <= target   = try
+            |otherwise              = bf target (try-1)
