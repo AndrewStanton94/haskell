@@ -54,3 +54,41 @@ rotate a = a
 listLength :: [a] -> Int
 listLength[]	= 0
 listLength(x:xs) = 1 + listLength xs
+
+multAll :: [Int] -> Int
+multAll[]       = 1
+multAll(x:xs)   = x * multAll xs
+
+andAll :: [Bool] -> Bool
+andAll []       = True
+andAll(x: xs)   = x && andAll xs
+
+countElems :: Int -> [Int] -> Int
+countElems i [] = 0
+countElems i (x: xs)   
+    | i == x = 1 + countElems i xs
+    | i /= x = 0 + countElems i xs
+
+removeAll :: Int -> [Int] -> [Int]
+removeAll i []  = []
+removeAll i (x: xs)
+    | i == x = [] ++ removeAll i xs
+    | i /= x = [x]++ removeAll i xs
+
+type StudentMark = (String, Int)
+listMarks :: String -> [StudentMark] -> [Int]
+listMarks name []           = []
+listMarks name studentMarks = [mark | (nameMark, mark) <- studentMarks, nameMark == name]
+                            --[return | stepperValues <- collection, filter]
+
+prefix :: [Int] -> [Int] -> Bool
+prefix (x: xs) (y: ys)
+    | x == y    = True && prefix xs ys
+    | otherwise = False
+prefix _ _    = True
+
+subSequence :: [Int] -> [Int] -> Bool
+subSequence (x: xs) (y: ys)
+    | x == y    = True
+    | otherwise = subSequence xs ys
+subSequence _ _ = False
