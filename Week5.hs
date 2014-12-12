@@ -89,6 +89,6 @@ prefix _ _    = True
 
 subSequence :: [Int] -> [Int] -> Bool
 subSequence (x: xs) (y: ys)
-    | x == y    = True
-    | otherwise = subSequence xs ys
-subSequence _ _ = False
+    | prefix (x: xs) (y: ys) == False    = subSequence xs ys
+    | otherwise = True 
+subSequence _ _ = True
