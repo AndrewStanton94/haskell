@@ -33,7 +33,9 @@ zeroToTen = filter (>= 0) . filter (<=10)
 
 squareRoots = map sqrt . filter (>= 0)
 
-countBetween min max = count (filter(<= max) . filter (>= min ))
-    where
-        count []        = 0
-        count (x:xs)    = 1 + count xs
+--  7 TODO
+
+--  8 TODO
+
+productSquareRoots list = foldr (*) 1 (squareRoots list)
+    -- 1 used in first iteration
