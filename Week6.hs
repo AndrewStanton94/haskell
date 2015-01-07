@@ -27,13 +27,17 @@ onlyLowerCase = filter isLower
 
 orAll = foldr (||) False
 
--- 4 TODO
+sumSquares xs = foldr (+) 0 [x*x | x <- xs]
 
 zeroToTen = filter (>= 0) . filter (<=10)
 
 squareRoots = map sqrt . filter (>= 0)
 
 --  7 TODO
+countBetween min max [] = 0
+countBetween min max (x:xs)
+    | min <= x && x <= max  = 1 + countBetween min max xs
+    | otherwise             = 0 + countBetween min max xs
 
 --  8 TODO
 
