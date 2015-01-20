@@ -59,3 +59,27 @@ height (Node _ st1 st2) = 1 + max (height st1) (height st2)
 sumValues :: Tree -> Int
 sumValues Null = 0
 sumValues (Node n st1 st2) = n + sumValues st1 + sumValues st2
+
+data Month = Jan | Feb | Mar | Apr | May | Jun | Jul | Aug | Sep | Oct | Nov | Dec
+				deriving (Eq, Ord, Show, Read)
+
+data Season = Spring | Summer | Autumn | Winter
+				deriving(Eq, Ord, Show, Read)
+
+season :: Month -> Season
+season s
+	| s == Dec || s < Mar	= Winter
+	| s < Jun				= Spring
+	| s < Aug				= Summer
+	| otherwise				= Autumn
+
+numberOfDays :: Month -> Int -> Int
+numberOfDays m y
+    | m == Apr || m == May || m == Sep || m == Nov	= 30
+    | m == Feb										= feb y
+    | otherwise										= 31
+    where feb y
+		| y `mod` 4 == 0	= 29
+		|otherwise			= 28
+
+data Point = Point Int Int
