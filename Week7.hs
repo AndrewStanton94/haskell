@@ -25,6 +25,7 @@ betterStudent (Student s1 m1) (Student s2 m2)
 -- Shapes algebraic type 
 data Shape = Circle Float |
              Rectangle Float Float
+    deriving (Show)
 
 area :: Shape -> Float
 area (Circle r)      = pi * r * r
@@ -83,3 +84,28 @@ numberOfDays m y
 		|otherwise			= 28
 
 data Point = Point Int Int
+    deriving (Show)
+
+data PositionedShape = PositionedShape Point Shape
+    deriving (Show)
+    -- Call like: PositionedShape (Point 5 5) (Rectangle 20 5)
+    -- Use all three constructors
+
+move :: PositionedShape -> Int -> Int -> PositionedShape
+move (PositionedShape (Point x y) shape) dx dy  = PositionedShape (Point (x + dx) (y + dy)) shape
+
+numberOfNodes :: Tree -> Int
+numberOfNodes Null = 0
+numberOfNodes (Node _ lTree rTree)  = 1 + (numberOfNodes lTree) + (numberOfNodes rTree)
+
+isMember :: Int -> Tree -> Bool
+isMember _ Null = False
+isMember target (Node value lTree rTree)
+    | target == value   = True
+    | otherwise         = (isMember target lTree) || (isMember target rTree)
+
+--?? Non exhaustive pattern
+leaves :: Tree -> [Int]
+leaves Null                     = []
+leaves (Node value Null Null)   = value:[]
+leaves (Node value lTree rTree) = (leaves lTree) ++ (leaves rTree)
