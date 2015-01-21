@@ -83,7 +83,7 @@ numberOfDays m y
 		| y `mod` 4 == 0	= 29
 		|otherwise			= 28
 
-data Point = Point Int Int
+data Point = Point Int Int | ThreeDPoint Int Int Int
     deriving (Show)
 
 data PositionedShape = PositionedShape Point Shape
@@ -104,7 +104,7 @@ isMember target (Node value lTree rTree)
     | target == value   = True
     | otherwise         = (isMember target lTree) || (isMember target rTree)
 
---?? Non exhaustive pattern
+-- ?? Non exhaustive pattern
 leaves :: Tree -> [Int]
 leaves Null                     = []
 leaves (Node value Null Null)   = value:[]
