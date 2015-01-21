@@ -33,7 +33,6 @@ zeroToTen = filter (>= 0) . filter (<=10)
 
 squareRoots = map sqrt . filter (>= 0)
 
---  7 TODO
 countBetween min max [] = 0
 countBetween min max (x:xs)
     | min <= x && x <= max  = 1 + countBetween min max xs
@@ -43,3 +42,7 @@ countBetween min max (x:xs)
 
 productSquareRoots list = foldr (*) 1 (squareRoots list)
     -- 1 used in first iteration
+
+lZeroToTen = filter (\x -> x >= 0 && x <= 10)
+
+-- lMult10 = foldr (:) [] (\x -> x * 10)
