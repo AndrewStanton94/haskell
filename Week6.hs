@@ -38,7 +38,7 @@ countBetween min max (x:xs)
     | min <= x && x <= max  = 1 + countBetween min max xs
     | otherwise             = 0 + countBetween min max xs
 
---  8 TODO
+alwaysPositive x = (==0) . length . filter (\x -> x <= 0) . map x
 
 productSquareRoots list = foldr (*) 1 (squareRoots list)
     -- 1 used in first iteration
