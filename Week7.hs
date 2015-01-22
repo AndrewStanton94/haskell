@@ -83,7 +83,7 @@ numberOfDays m y
 		| y `mod` 4 == 0	= 29
 		|otherwise			= 28
 
-data Point = Point Int Int | ThreeDPoint Int Int Int
+data Point = Point Float Float | ThreeDPoint Float Float Float
     deriving (Show)
 
 data PositionedShape = PositionedShape Point Shape
@@ -91,7 +91,7 @@ data PositionedShape = PositionedShape Point Shape
     -- Call like: PositionedShape (Point 5 5) (Rectangle 20 5)
     -- Use all three constructors
 
-move :: PositionedShape -> Int -> Int -> PositionedShape
+move :: PositionedShape -> Float -> Float -> PositionedShape
 move (PositionedShape (Point x y) shape) dx dy  = PositionedShape (Point (x + dx) (y + dy)) shape
 
 numberOfNodes :: Tree -> Int
@@ -104,7 +104,6 @@ isMember target (Node value lTree rTree)
     | target == value   = True
     | otherwise         = (isMember target lTree) || (isMember target rTree)
 
--- ?? Non exhaustive pattern
 leaves :: Tree -> [Int]
 leaves Null                     = []
 leaves (Node value Null Null)   = value:[]
