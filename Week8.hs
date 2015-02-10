@@ -64,6 +64,12 @@ copyFile = do
 	fileContent <- readFile from
 	writeFile to fileContent
 
--- buildList :: [String] -> IO ()
-
--- listBuilder = buildList 
+buildList :: [String] -> IO ()
+buildList listIn = do
+    print (reverse listIn)
+    putStr "Enter a line: "
+    strIn <- getLine
+    if strIn == "" then return ()
+    else buildList ( strIn : listIn)
+    
+listBuilder = buildList []
