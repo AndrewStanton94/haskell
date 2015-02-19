@@ -11,6 +11,15 @@ wordsOfLength givenLength listIn = [word | word <- listIn, length word == givenL
 
 --main :: IO ()
 main = do
-    content <- readFile "words.txt"    -- This is a string?
-    --putStrLn content
-    read (return (content) :: [String]) -- return to get IO, which is what read wants for input???
+    content <- readFile "words.txt"    -- This is a string
+    let listData = read content :: [String]     -- info = ([String]) content
+    let listData2 = addWord "Lemon" listData    -- Appended []
+    let strData = wordsToString (listData2)     -- (String)
+    putStrLn (strData)
+    writeFile "words.txt" (show listData2)
+    --putStrLn (show (addWord "Lemon" info))
+    --putStrLn (show (length info))
+
+-- return: cast to IO
+-- read String :: type: cast
+-- show var: cast to String
