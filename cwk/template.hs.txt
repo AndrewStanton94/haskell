@@ -1,0 +1,42 @@
+-- 
+-- MATHFUN - Discrete Mathematics and Functional Programming
+-- Functional Programming Assignment 2014/15
+-- Template for the assignment program (replace this comment)
+-- Add your student number
+--
+
+--
+-- Types
+--
+-- Define Film type here 
+
+testDatabase :: [Film]
+testDatabase = [ ... the 25 Film values ... ]
+
+-- 
+--
+--  Your functional code goes here
+--
+--
+
+-- Demo function to test basic functionality (without persistence - i.e. 
+-- testDatabase doesn't change and nothing is saved/loaded to/from file).
+
+--demo :: Int -> IO ()
+--demo 1   = putStrLn all films after adding 2014 film "The Monuments Men" 
+--                   starring "George Clooney", "Matt Damon" and "Bill Murray" 
+--                   to testDatabase
+--demo 2   = putStrLn (filmsAsString testDatabase)
+--demo 3   = putStrLn all films that Zoe is a fan of
+--demo 4   = putStrLn all fans of Titanic
+--demo 5   = putStrLn all films between 2010 and 2013
+--demo 6   = putStrLn all films after "Zoe" says she is a fan of "The Reader"
+--demo 66  = putStrLn all films after "Zoe" says she is a fan of "Skyfall"
+--demo 7   = putStrLn average number of fans for films starring "Tom Hanks"
+--demo 8   = putStrLn all co-stars of "Tom Hanks"
+
+--
+--
+-- Your user interface code goes here
+--
+--
