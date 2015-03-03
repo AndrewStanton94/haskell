@@ -9,7 +9,7 @@ wordsOfLength :: Int -> [String] -> [String]
 -- wordsOfLength givenLength listIn = filter (givenLength == length ) listIn 
 wordsOfLength givenLength listIn = [word | word <- listIn, length word == givenLength]
 
---main :: IO ()
+main :: IO ()
 main = do
     content <- readFile "words.txt"    -- This is a string
     let listData = read content :: [String]     -- info = ([String]) content
@@ -22,7 +22,15 @@ main = do
 -- read String :: type: cast
 -- show var: cast to String
 
---menu = do
+--Menu take in list given by main
+menu info = do
+    putStrLn "0: Add a word\n1: Display all words\n2: Display all words of length"
+    choice <- getLine
+    case choice of
+        "0" -> menu (addWord getLine info) --putStrLn "Add word"
+        "1" -> putStrLn "Show all words"
+        "2" -> putStrLn "Words of length"
+        _   -> putStrLn "Else" 
 	
 
 
