@@ -19,15 +19,36 @@ main = do
     writeFile "words.txt" (show listData2)
 
 -- return: cast to IO
--- read String :: type: cast
+
+-- read aString :: type  = (type) aString
+    --read :: Read a => String -> a
+
 -- show var: cast to String
+    --show :: Show a => a -> String
+
+
+--getWordToAdd :: IO String
+getWordToAdd = do
+    putStrLn "Word to add"
+    newWord <- getLine
+    return newWord
+
+
+--addWordInterface :: [String] -> [String]
+--addWordInterface listIn = addWord (show getWordToAdd) listIn
+-- show can't handle String IO
+
+-- get string
+-- add to list
+-- return string
+
 
 --Menu take in list given by main
-menu info = do
+menu strIn = do
     putStrLn "0: Add a word\n1: Display all words\n2: Display all words of length"
     choice <- getLine
     case choice of
-        "0" -> menu (addWord getLine info) --putStrLn "Add word"
+        --"0" -> menu (addWord getLine strIn) -- Add word
         "1" -> putStrLn "Show all words"
         "2" -> putStrLn "Words of length"
         _   -> putStrLn "Else" 
