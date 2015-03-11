@@ -40,6 +40,10 @@ isFanOf :: [Film] -> String -> [Film]
 isFanOf films fan = [(Film name cast year fans) | (Film name cast year fans) <- films, elem fan fans]
     -- putStrLn $ filmsAsString  $ isFanOf testDatabase "Olga"
 
+filmsInPeriod :: [Film] -> Int -> Int -> [Film]
+filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast year fans) <- films, min <= year && year <= max]
+    -- putStrLn $ filmsAsString  $ filmsInPeriod testDatabase 2010 2015
+
 -- Demo function to test basic functionality (without persistence - i.e. 
 -- testDatabase doesn't change and nothing is saved/loaded to/from file).
 
