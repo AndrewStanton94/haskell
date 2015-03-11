@@ -29,6 +29,16 @@ testDatabase = [ Film "Casino Royale" ["Daniel Craig", "Eva Green", "Judi Dench"
 addFilm :: [Film] -> Film -> [Film]
 addFilm existingList newFilm = existingList ++ [newFilm]
     -- appends. : Would prepend
+    -- addFilm testDatabase aNewFilm
+
+filmsAsString :: [Film] -> String
+filmsAsString [] = ""
+filmsAsString ((Film name cast year fans):films) = name ++ "\n" ++ filmsAsString films
+    -- putStrLn $ filmsAsString testDatabase
+
+isFanOf :: [Film] -> String -> [Film]
+isFanOf films fan = [(Film name cast year fans) | (Film name cast year fans) <- films, elem fan fans]
+    -- putStrLn $ filmsAsString  $ isFanOf testDatabase "Olga"
 
 -- Demo function to test basic functionality (without persistence - i.e. 
 -- testDatabase doesn't change and nothing is saved/loaded to/from file).
