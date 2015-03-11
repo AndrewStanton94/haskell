@@ -32,18 +32,17 @@ addFilm existingList newFilm = existingList ++ [newFilm]
     -- appends. : Would prepend
     -- addFilm testDatabase aNewFilm
 
+wordsToString :: [String] -> String
+wordsToString [] = ""
+wordsToString (x:xs)
+    | length (x:xs) == 1    = x ++ "."
+    | otherwise             = x ++ ", " ++ wordsToString xs
 
 filmsAsString :: [Film] -> String
 filmsAsString [] = ""
 filmsAsString ((Film name cast year fans) : films) = name ++ " (" ++ show year ++ ")\n" ++ showCast cast ++   showFans fans ++ filmsAsString films
     where
         showCast cast = "Starring: " ++ wordsToString cast ++ "\n"
-            where
-                wordsToString :: [String] -> String
-                wordsToString [] = ""
-                wordsToString (x:xs)
-                    | length (x:xs) == 1    = x ++ "."
-                    | otherwise             = x ++ ", " ++ wordsToString xs
 
         showFans fans = show (length fans) ++ " fans" ++ "\n\n"
     -- putStrLn $ filmsAsString testDatabase
@@ -53,14 +52,23 @@ userIsFanOf films fan = [(Film name cast year fans) | (Film name cast year fans)
     -- putStrLn $ filmsAsString  $ userIsFanOf testDatabase "Olga"
 
 -- IV give all fans of a particular film
+--allFansOf :: [Film] -> Name -> [Fan]
+--allFansOf films name = find () films
+-- find not viable
+-- own search by film & actor needed?
 
 filmsInPeriod :: [Film] -> Int -> Int -> [Film]
 filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast year fans) <- films, min <= year && year <= max]
     -- putStrLn $ filmsAsString  $ filmsInPeriod testDatabase 2010 2015
 
 -- VI allow a user to say they are a fan of a particular film
+--becomeFilmFan :: [Film] -> String -> [Film]
+
 -- VII. give the average number of fans for the films starring a particular actor
+--fanAverage:: [Film] -> String -> Float
+
 -- VIII. give (without duplicates) the names of actors who have co-starred in at least one film with a particular actor
+--coStarsOf :: [Film] -> String -> [String]
 
 -- Demo function to test basic functionality (without persistence - i.e. 
 -- testDatabase doesn't change and nothing is saved/loaded to/from file).
