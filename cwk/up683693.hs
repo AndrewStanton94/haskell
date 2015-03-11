@@ -48,13 +48,19 @@ filmsAsString ((Film name cast year fans) : films) = name ++ " (" ++ show year +
         showFans fans = show (length fans) ++ " fans" ++ "\n\n"
     -- putStrLn $ filmsAsString testDatabase
 
-isFanOf :: [Film] -> String -> [Film]
-isFanOf films fan = [(Film name cast year fans) | (Film name cast year fans) <- films, elem fan fans]
-    -- putStrLn $ filmsAsString  $ isFanOf testDatabase "Olga"
+userIsFanOf :: [Film] -> String -> [Film]
+userIsFanOf films fan = [(Film name cast year fans) | (Film name cast year fans) <- films, elem fan fans]
+    -- putStrLn $ filmsAsString  $ userIsFanOf testDatabase "Olga"
+
+-- IV give all fans of a particular film
 
 filmsInPeriod :: [Film] -> Int -> Int -> [Film]
 filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast year fans) <- films, min <= year && year <= max]
     -- putStrLn $ filmsAsString  $ filmsInPeriod testDatabase 2010 2015
+
+-- VI allow a user to say they are a fan of a particular film
+-- VII. give the average number of fans for the films starring a particular actor
+-- VIII. give (without duplicates) the names of actors who have co-starred in at least one film with a particular actor
 
 -- Demo function to test basic functionality (without persistence - i.e. 
 -- testDatabase doesn't change and nothing is saved/loaded to/from file).
