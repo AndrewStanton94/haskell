@@ -81,7 +81,9 @@ filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast yea
 --Extract fans, append, put back
 
 -- VII. give the average number of fans for the films starring a particular actor
---fanAverage:: [Film] -> String -> Float
+fanAverage:: [Film] -> String -> Float
+fanAverage films actor = sum [length fans | (Film name cast year fans) <- films, elem actor cast] 
+-- make own average function
 -- sum [length fans <- films where elem actor cast]
 
 -- VIII. give (without duplicates) the names of actors who have co-starred in at least one film with a particular actor
