@@ -78,12 +78,17 @@ filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast yea
 
 -- VI allow a user to say they are a fan of a particular film
 --becomeFilmFan :: [Film] -> String -> [Film]
+--Extract fans, append, put back
 
 -- VII. give the average number of fans for the films starring a particular actor
 --fanAverage:: [Film] -> String -> Float
+-- sum [length fans <- films where elem actor cast]
 
 -- VIII. give (without duplicates) the names of actors who have co-starred in at least one film with a particular actor
 --coStarsOf :: [Film] -> String -> [String]
+-- distinct cast : elem actor cast concat ! list eval because nested
+
+-- elem actor cast reused. Factor out?
 
 -- Demo function to test basic functionality (without persistence - i.e. 
 -- testDatabase doesn't change and nothing is saved/loaded to/from file).
