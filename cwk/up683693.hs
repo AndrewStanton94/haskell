@@ -28,7 +28,7 @@ testDatabase = [ Film "Casino Royale" ["Daniel Craig", "Eva Green", "Judi Dench"
 --
 --
 addFilm :: [Film] -> Film -> [Film]
-addFilm existingList newFilm = existingList ++ [newFilm]
+addFilm existingFilms newFilm = existingFilms ++ [newFilm]
     -- appends. : Would prepend
     -- addFilm testDatabase aNewFilm
 
@@ -51,11 +51,26 @@ userIsFanOf :: [Film] -> String -> [Film]
 userIsFanOf films fan = [(Film name cast year fans) | (Film name cast year fans) <- films, elem fan fans]
     -- putStrLn $ filmsAsString  $ userIsFanOf testDatabase "Olga"
 
+--filterFilms :: [Film] -> String -> String -> [Film]
+--filterFilms films attr value = [(Film name cast year fans) | (Film name cast year fans) <- films, attr == value]
+-- try filter????
+-- def lambda before then pass arg to call
+--films appended when called
+
+-- Search database for film with given title
+findFilm :: [Film] -> String -> [Film]
+findFilm films searchFor =  [(Film name cast year fans) | (Film name cast year fans) <- films, name == searchFor]
+-- findFilm testDatabase "Casino Royale"
+
+-- Extract fans from Film
+getFans :: Film -> Fans
+getFans (Film name cast year fans) = fans
+--getFans aNewFilm
+
 -- IV give all fans of a particular film
---allFansOf :: [Film] -> Name -> [Fan]
---allFansOf films name = find () films
--- find not viable
--- own search by film & actor needed?
+allFansOf :: [Film] -> Name -> Fans
+allFansOf films name = getFans $ head $ findFilm films name
+-- putStrLn $ wordsToString $ allFansOf testDatabase "Casino Royale"
 
 filmsInPeriod :: [Film] -> Int -> Int -> [Film]
 filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast year fans) <- films, min <= year && year <= max]
