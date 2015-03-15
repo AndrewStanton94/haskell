@@ -96,17 +96,22 @@ fanAverage films actor = average [length $ fans | (Film name cast year fans) <- 
 -- Demo function to test basic functionality (without persistence - i.e. 
 -- testDatabase doesn't change and nothing is saved/loaded to/from file).
 
---demo :: Int -> IO ()
---demo 1   = putStrLn all films after adding 2014 film "The Monuments Men" 
+demo :: Int -> IO ()
+    -- addFilm testDatabase aNewFilm
+demo 1   = putStrLn $ filmsAsString $ addFilm testDatabase (Film "The Monuments Men" ["George Clooney", "Matt Damon", "Bill Murray"] 2014 [] )
+--          all films after adding 2014 film "The Monuments Men" 
 --                   starring "George Clooney", "Matt Damon" and "Bill Murray" 
 --                   to testDatabase
---demo 2   = putStrLn (filmsAsString testDatabase)
+demo 2   = putStrLn $ filmsAsString testDatabase
 --demo 3   = putStrLn all films that Zoe is a fan of
---demo 4   = putStrLn all fans of Titanic
---demo 5   = putStrLn all films between 2010 and 2013
+demo 4   = putStrLn $ wordsToString $ allFansOf testDatabase "Titanic"
+--              putStrLn all fans of Titanic
+demo 5   = putStrLn $ filmsAsString  $ filmsInPeriod testDatabase 2010 2013
+--              putStrLn all films between 2010 and 2013
 --demo 6   = putStrLn all films after "Zoe" says she is a fan of "The Reader"
 --demo 66  = putStrLn all films after "Zoe" says she is a fan of "Skyfall"
---demo 7   = putStrLn average number of fans for films starring "Tom Hanks"
+demo 7   = putStrLn $ show $ fanAverage testDatabase "Tom Hanks"
+--              putStrLn average number of fans for films starring "Tom Hanks"
 --demo 8   = putStrLn all co-stars of "Tom Hanks"
 
 --
