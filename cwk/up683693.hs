@@ -82,11 +82,10 @@ filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast yea
 
 -- VII. give the average number of fans for the films starring a particular actor
 fanAverage:: [Film] -> String -> Float
-fanAverage films actor = average [length fans | (Film name cast year fans) <- films, elem actor cast] 
-    where average fanList = sum fanList / fromIntegral length fanList
--- make own average function
--- sum [length fans <- films where elem actor cast]
---putStrLn $ fanAverage testDatabase "Daniel Craig"
+fanAverage films actor = average [length $ fans | (Film name cast year fans) <- films, elem actor cast] 
+    where average fanList = fromIntegral ( sum fanList) / fromIntegral ( length fanList)
+--putStrLn $ show $ fanAverage testDatabase "Daniel Craig"
+
 
 -- VIII. give (without duplicates) the names of actors who have co-starred in at least one film with a particular actor
 --coStarsOf :: [Film] -> String -> [String]
