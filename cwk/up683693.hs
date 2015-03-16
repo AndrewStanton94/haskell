@@ -78,6 +78,7 @@ filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast yea
 
 -- VI allow a user to say they are a fan of a particular film
 --becomeFilmFan :: [Film] -> String -> [Film]
+--becomeFilmFan films film fan = (extract fan list in new Film) . findFilm films film : (film without target)
 --Extract fans, append, put back
 
 -- VII. give the average number of fans for the films starring a particular actor
