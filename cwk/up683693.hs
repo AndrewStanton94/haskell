@@ -4,6 +4,8 @@
 -- UP683693
 --
 
+import Data.List
+
 -- Types
 type Name = String
 type Cast = [String]
@@ -51,12 +53,6 @@ userIsFanOf :: [Film] -> String -> [Film]
 userIsFanOf films fan = [(Film name cast year fans) | (Film name cast year fans) <- films, elem fan fans]
     -- putStrLn $ filmsAsString  $ userIsFanOf testDatabase "Olga"
 
---filterFilms :: [Film] -> String -> String -> [Film]
---filterFilms films attr value = [(Film name cast year fans) | (Film name cast year fans) <- films, attr == value]
--- try filter????
--- def lambda before then pass arg to call
---films appended when called
-
 -- Search database for film with given title
 findFilm :: [Film] -> String -> [Film]
 findFilm films searchFor =  [(Film name cast year fans) | (Film name cast year fans) <- films, name == searchFor]
@@ -89,7 +85,19 @@ fanAverage films actor = average [length $ fans | (Film name cast year fans) <- 
 
 
 -- VIII. give (without duplicates) the names of actors who have co-starred in at least one film with a particular actor
---coStarsOf :: [Film] -> String -> [String]
+coStarsOf :: [Film] -> String -> [String]
+coStarsOf [] actor = []
+coStarsOf ((Film name cast year fans) : films) actor = nub $ filmCoStars cast actor ++ coStarsOf films actor
+
+-- putStrLn $ show $coStarsOf testDatabase "Daniel Craig"
+
+
+filmCoStars :: Cast -> String -> Cast
+-- co-Stars of given actor or [] if not staring actor
+filmCoStars cast actor
+    | elem actor cast   = filter (/=actor) cast
+    | otherwise         = []
+
 -- distinct cast : elem actor cast concat ! list eval because nested
 
 -- elem actor cast reused. Factor out?
@@ -104,7 +112,8 @@ demo 1   = putStrLn $ filmsAsString $ addFilm testDatabase (Film "The Monuments 
 --                   starring "George Clooney", "Matt Damon" and "Bill Murray" 
 --                   to testDatabase
 demo 2   = putStrLn $ filmsAsString testDatabase
---demo 3   = putStrLn all films that Zoe is a fan of
+demo 3   = putStrLn $ filmsAsString  $ userIsFanOf testDatabase "Zoe"
+            --putStrLn all films that Zoe is a fan of
 demo 4   = putStrLn $ wordsToString $ allFansOf testDatabase "Titanic"
 --              putStrLn all fans of Titanic
 demo 5   = putStrLn $ filmsAsString  $ filmsInPeriod testDatabase 2010 2013
@@ -113,8 +122,8 @@ demo 5   = putStrLn $ filmsAsString  $ filmsInPeriod testDatabase 2010 2013
 --demo 66  = putStrLn all films after "Zoe" says she is a fan of "Skyfall"
 demo 7   = putStrLn $ show $ fanAverage testDatabase "Tom Hanks"
 --              putStrLn average number of fans for films starring "Tom Hanks"
---demo 8   = putStrLn all co-stars of "Tom Hanks"
-
+demo 8   = putStrLn $ show $coStarsOf testDatabase "Tom Hanks"
+    --putStrLn all co-stars of "Tom Hanks"
 --
 --
 -- Your user interface code goes here
