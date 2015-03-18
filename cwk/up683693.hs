@@ -129,3 +129,68 @@ demo 8   = putStrLn $ show $coStarsOf testDatabase "Tom Hanks"
 -- Your user interface code goes here
 --
 --
+
+getString :: String -> IO String
+getString prompt = do
+    putStrLn prompt
+    getLine
+
+
+getInt :: String -> IO Int
+getInt prompt = do 
+    putStrLn prompt
+    str <- getLine
+    return (read str :: Int)
+
+
+--startUp :: IO ()
+startUp = do
+    content <- readFile "films.txt"
+    let filmList = read content :: [Film]
+    finalFilmList <- menu filmList
+    writeFile "films.txt" $ show finalFilmList
+    putStrLn "File saved"
+
+menu :: [Film] -> IO [Film]
+menu filmList = do
+    putStrLn "\n1. Add a new film to the database.\n2. Give all films in the database.\n3. Give all films that a particular user is a fan of.\n4. Give all fans of a particular film.\n5. Give all the films that were released during a particular period (i.e. between a given start year and end year).\n6. Allow a user to say they are a fan of a particular film.\n7. Give the average number of fans for the films starring a particular actor.\n8. Give (without duplicates) the names of actors who have co-starred in at least one film with a particular actor.\n"
+    choice <- getLine
+    case choice of
+        "1" -> do
+            name <- getString "Please enter film name: "
+            cast <- getString "Please enter film cast: "   -- To change
+            year <- getInt "Please enter film year: "
+            let newList = addFilm filmList (Film name (read cast :: Cast) year [])
+            menu newList
+
+        "2" -> do
+            putStrLn $ filmsAsString filmList
+            menu filmList
+
+        "3" -> do
+            fan <- getString "Choose a fan: "
+            putStrLn $ filmsAsString $ userIsFanOf filmList fan
+            menu filmList
+
+        "4" -> do
+            film <- getString "Choose a film: "
+            putStrLn $ wordsToString $ allFansOf filmList film
+            menu filmList
+
+        "5" -> do
+            min <- getInt "Choose minimum year: "
+            max <- getInt "Choose maximum year: "
+            putStrLn $ filmsAsString $ filmsInPeriod filmList min max
+            menu filmList
+
+        "7" -> do
+            actor <- getString "Choose an actor: "
+            putStrLn $ show $ fanAverage filmList actor
+            menu filmList
+
+        "8" -> do
+            actor <- getString "Choose an actor: "
+            putStrLn $ wordsToString $ coStarsOf filmList actor
+            menu filmList
+
+        _   -> return filmList
