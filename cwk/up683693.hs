@@ -66,10 +66,16 @@ filmsInPeriod :: [Film] -> Int -> Int -> [Film]
 filmsInPeriod films min max =  filter (\(Film name cast year fans) -> (min <= year && year <= max)) films
     -- putStrLn $ filmsAsString  $ filmsInPeriod testDatabase 2010 2015
 
+addFan :: Film -> String -> Film
+addFan (Film name cast year fans) fan = (Film name cast year (fan:fans))
+
 -- VI allow a user to say they are a fan of a particular film
---becomeFilmFan :: [Film] -> String -> [Film]
---becomeFilmFan films film fan = (extract fan list in new Film) . findFilm films film : (film without target)
+becomeFilmFan :: [Film] -> String -> String -> [Film]
+becomeFilmFan films film fan = addFilm films (addFan (findFilm films film) fan)
+    --(extract fan list in new Film) . findFilm films film : (film without target)
 --Extract fans, append, put back
+--becomeFilmFan testDatabase "Casino Royale" "Me"
+
 
 -- VII. give the average number of fans for the films starring a particular actor
 fanAverage:: [Film] -> String -> Float
@@ -91,10 +97,6 @@ filmCoStars :: Cast -> String -> Cast
 filmCoStars cast actor
     | elem actor cast   = filter (/=actor) cast
     | otherwise         = []
-
--- distinct cast : elem actor cast concat ! list eval because nested
-
--- elem actor cast reused. Factor out?
 
 -- Demo function to test basic functionality (without persistence - i.e. 
 -- testDatabase doesn't change and nothing is saved/loaded to/from file).
@@ -129,6 +131,17 @@ getString prompt = do
     putStrLn prompt
     getLine
 
+--getWords :: [String]
+--getWords = do
+--    strIn <- getLine
+--    case strIn of
+--        ""  ->  []
+--        otherwise -> strIn : getWords
+
+--getList :: String -> IO [String]
+--getList prompt = do
+--    putStrLn prompt
+--    return getWords
 
 getInt :: String -> IO Int
 getInt prompt = do 
@@ -179,7 +192,6 @@ menu filmList = do
 
         "7" -> do
             actor <- getString "Choose an actor: "
-            --putStrLn $ show $ fanAverage filmList actor
             printf "%3.2f Fan average" $ fanAverage filmList actor
             menu filmList
 
