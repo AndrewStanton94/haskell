@@ -47,8 +47,8 @@ filmsAsString ((Film name cast year fans) : films) = name ++ " (" ++ show year +
     -- putStrLn $ filmsAsString testDatabase
 
 userIsFanOf :: [Film] -> String -> [Film]
-userIsFanOf films fan = [(Film name cast year fans) | (Film name cast year fans) <- films, elem fan fans]
-    -- putStrLn $ filmsAsString  $ userIsFanOf testDatabase "Olga"
+--userIsFanOf films fan = [(Film name cast year fans) | (Film name cast year fans) <- films, elem fan fans]
+userIsFanOf films fan = filter (\(Film name cast year fans) -> elem fan fans) films
 
 -- Search database for film with given title
 findFilm :: [Film] -> String -> [Film]
@@ -140,7 +140,7 @@ getInt prompt = do
     return (read str :: Int)
 
 
---startUp :: IO ()
+startUp :: IO ()
 startUp = do
     content <- readFile "films.txt"
     let filmList = read content :: [Film]
