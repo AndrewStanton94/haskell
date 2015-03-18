@@ -54,13 +54,13 @@ findFilm films film = case (find (\(Film name cast year fans) -> name == film ) 
         Nothing -> (Film "" [] 0 [])
         Just x  -> x
 
--- Extract fans from Film
-getFans :: Film -> Fans
-getFans (Film name cast year fans) = fans
---getFans aNewFilm
 
 allFansOf :: [Film] -> Name -> Fans
 allFansOf films film = getFans $ findFilm films film
+    where
+        -- Extract fans from Film
+        getFans :: Film -> Fans
+        getFans (Film name cast year fans) = fans
 
 filmsInPeriod :: [Film] -> Int -> Int -> [Film]
 filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast year fans) <- films, min <= year && year <= max]
