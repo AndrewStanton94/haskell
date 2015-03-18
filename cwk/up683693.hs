@@ -5,6 +5,7 @@
 --
 
 import Data.List
+import Text.Printf
 
 -- Types
 type Name = String
@@ -18,9 +19,6 @@ data Film = Film Name Cast Year Fans
            deriving (Show,Read)
 			    --title cast year fans
 
--- My test data
-aNewFilm = Film "Sherlock" ["Benedict", "Martin"] 2050 ["Molly", "Mycroft", "Gavin", "Graham", "Jim"]
-
 testDatabase :: [Film]
 testDatabase = [ Film "Casino Royale" ["Daniel Craig", "Eva Green", "Judi Dench"] 2006 ["Garry", "Dave", "Zoe", "Kevin", "Emma"], Film "Cowboys & Aliens" ["Harrison Ford", "Daniel Craig", "Olivia Wilde"] 2011 ["Bill", "Jo", "Garry", "Kevin", "Olga", "Liz"], Film "Catch Me If You Can" ["Leonardo DiCaprio", "Tom Hanks"] 2002 ["Zoe", "Heidi", "Jo", "Emma", "Liz", "Sam", "Olga", "Kevin", "Tim"], Film "Mamma Mia!" ["Meryl Streep", "Pierce Brosnan", "Colin Firth"] 2008 ["Kevin", "Jo", "Liz", "Amy", "Sam", "Zoe"], Film "Titanic" ["Leonardo DiCaprio", "Kate Winslet"] 1997 ["Zoe", "Amy", "Heidi", "Jo", "Megan", "Olga"], Film "Quantum of Solace" ["Daniel Craig", "Judi Dench"] 2008 ["Bill", "Olga", "Tim", "Zoe", "Paula"], Film "You've Got Mail" ["Meg Ryan", "Tom Hanks"] 1998 ["Dave", "Amy"], Film "Collateral" ["Tom Cruise", "Jamie Foxx"] 2004 ["Dave", "Garry", "Megan", "Sam", "Wally"], Film "The Departed" ["Leonardo DiCaprio", "Matt Damon", "Jack Nicholson"] 2006 ["Zoe", "Emma", "Paula", "Olga", "Dave"], Film "Up in the Air" ["George Clooney", "Vera Farmiga"] 2009 ["Wally", "Liz", "Kevin", "Tim", "Emma"], Film "Gravity" ["George Clooney", "Sandra Bullock"] 2013 ["Zoe", "Emma", "Garry", "Ian", "Neal", "Wally", "Olga", "Dave"], Film "The King's Speech" ["Colin Firth", "Geoffrey Rush"] 2010 ["Garry", "Megan", "Sam", "Ian", "Bill", "Emma", "Chris"], Film "Ocean's Twelve" ["George Clooney", "Matt Damon", "Catherine Zeta-Jones", "Julia Roberts"] 2004 ["Jo", "Wally", "Emma"], Film "The Adjustment Bureau" ["Matt Damon", "Emily Blunt"] 2011 ["Kevin", "Tim", "Emma", "Emma", "Garry", "Ian", "Neal"], Film "Cloud Atlas" ["Tom Hanks", "Halle Berry"] 2012 ["Dave", "Amy", "Garry", "Ian", "Neal"], Film "The Reader" ["Kate Winslet", "Ralph Fiennes"] 2008 ["Emma", "Bill", "Dave", "Liz"], Film "Begin Again" ["Keira Knightley", "Mark Ruffalo", "James Corden"] 2013 ["Garry", "Bill", "Olga", "Jo", "Wally", "Emma"], Film "Revolutionary Road" ["Leonardo DiCaprio", "Kate Winslet"] 2008 ["Wally", "Sam", "Dave", "Jo"], Film "Into the Woods" ["Meryl Streep", "Emily Blunt", "James Corden"] 2014 ["Dave", "Jo", "Wally", "Emma"], Film "Now You See Me" ["Jesse Eisenberg", "Mark Ruffalo"] 2013 ["Bill", "Sam", "Zoe", "Jo"], Film "Larry Crowne" ["Tom Hanks", "Julia Roberts"] 2011 ["Liz", "Wally"], Film "The Terminal" ["Tom Hanks", "Catherine Zeta Jones"] 2004 ["Olga", "Heidi", "Bill", "Sam", "Zoe"], Film "Edge of Tomorrow" ["Tom Cruise", "Emily Blunt"] 2014 ["Jo", "Chris", "Wally", "Ian", "Garry", "Bill", "Olga", "Megan", "Sam"], Film "Django Unchained" ["Jamie Foxx", "Leonardo DiCaprio", "Christoph Waltz"] 2012 ["Kevin", "Tim", "Emma", "Olga"], Film "Skyfall" ["Daniel Craig", "Judi Dench", "Ralph Fiennes"] 2012 ["Bill", "Olga", "Zoe", "Paula", "Megan", "Sam", "Wally" ]]
 
@@ -32,7 +30,6 @@ testDatabase = [ Film "Casino Royale" ["Daniel Craig", "Eva Green", "Judi Dench"
 addFilm :: [Film] -> Film -> [Film]
 addFilm existingFilms newFilm = existingFilms ++ [newFilm]
     -- appends. : Would prepend
-    -- addFilm testDatabase aNewFilm
 
 wordsToString :: [String] -> String
 wordsToString [] = ""
@@ -153,7 +150,7 @@ startUp = do
 
 menu :: [Film] -> IO [Film]
 menu filmList = do
-    putStrLn "\n1. Add a new film to the database.\n2. Give all films in the database.\n3. Give all films that a particular user is a fan of.\n4. Give all fans of a particular film.\n5. Give all the films that were released during a particular period (i.e. between a given start year and end year).\n6. Allow a user to say they are a fan of a particular film.\n7. Give the average number of fans for the films starring a particular actor.\n8. Give (without duplicates) the names of actors who have co-starred in at least one film with a particular actor.\n"
+    putStrLn "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1. Add a new film to the database.\n2. Give all films in the database.\n3. Give all films that a particular user is a fan of.\n4. Give all fans of a particular film.\n5. Give all the films that were released during a particular period (i.e. between a given start year and end year).\n6. Allow a user to say they are a fan of a particular film.\n7. Give the average number of fans for the films starring a particular actor.\n8. Give (without duplicates) the names of actors who have co-starred in at least one film with a particular actor.\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     choice <- getLine
     case choice of
         "1" -> do
@@ -185,7 +182,8 @@ menu filmList = do
 
         "7" -> do
             actor <- getString "Choose an actor: "
-            putStrLn $ show $ fanAverage filmList actor
+            --putStrLn $ show $ fanAverage filmList actor
+            printf "%3.2f Fan average" $ fanAverage filmList actor
             menu filmList
 
         "8" -> do
