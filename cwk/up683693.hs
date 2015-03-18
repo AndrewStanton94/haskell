@@ -54,7 +54,6 @@ findFilm films film = case (find (\(Film name cast year fans) -> name == film ) 
         Nothing -> (Film "" [] 0 [])
         Just x  -> x
 
-
 allFansOf :: [Film] -> Name -> Fans
 allFansOf films film = getFans $ findFilm films film
     where
@@ -63,7 +62,8 @@ allFansOf films film = getFans $ findFilm films film
         getFans (Film name cast year fans) = fans
 
 filmsInPeriod :: [Film] -> Int -> Int -> [Film]
-filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast year fans) <- films, min <= year && year <= max]
+--filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast year fans) <- films, min <= year && year <= max]
+filmsInPeriod films min max =  filter (\(Film name cast year fans) -> (min <= year && year <= max)) films
     -- putStrLn $ filmsAsString  $ filmsInPeriod testDatabase 2010 2015
 
 -- VI allow a user to say they are a fan of a particular film
