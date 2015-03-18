@@ -47,23 +47,20 @@ filmsAsString ((Film name cast year fans) : films) = name ++ " (" ++ show year +
     -- putStrLn $ filmsAsString testDatabase
 
 userIsFanOf :: [Film] -> String -> [Film]
---userIsFanOf films fan = [(Film name cast year fans) | (Film name cast year fans) <- films, elem fan fans]
 userIsFanOf films fan = filter (\(Film name cast year fans) -> elem fan fans) films
 
--- Search database for film with given title
-findFilm :: [Film] -> String -> [Film]
-findFilm films searchFor =  [(Film name cast year fans) | (Film name cast year fans) <- films, name == searchFor]
--- findFilm testDatabase "Casino Royale"
+findFilm :: [Film] -> String -> Film
+findFilm films film = case (find (\(Film name cast year fans) -> name == film ) films ) of
+        Nothing -> (Film "" [] 0 [])
+        Just x  -> x
 
 -- Extract fans from Film
 getFans :: Film -> Fans
 getFans (Film name cast year fans) = fans
 --getFans aNewFilm
 
--- IV give all fans of a particular film
 allFansOf :: [Film] -> Name -> Fans
-allFansOf films name = getFans $ head $ findFilm films name
--- putStrLn $ wordsToString $ allFansOf testDatabase "Casino Royale"
+allFansOf films film = getFans $ findFilm films film
 
 filmsInPeriod :: [Film] -> Int -> Int -> [Film]
 filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast year fans) <- films, min <= year && year <= max]
