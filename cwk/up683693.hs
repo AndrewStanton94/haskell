@@ -16,7 +16,7 @@ type Fans = [String]
 -- Define Film type here 
 data Film = Film Name Cast Year Fans
 --String [String] Int [String]
-           deriving (Show,Read)
+           deriving (Show,Read, Eq)
 			    --title cast year fans
 
 testDatabase :: [Film]
@@ -62,35 +62,30 @@ allFansOf films film = getFans $ findFilm films film
         getFans (Film name cast year fans) = fans
 
 filmsInPeriod :: [Film] -> Int -> Int -> [Film]
---filmsInPeriod films min max =  [(Film name cast year fans) | (Film name cast year fans) <- films, min <= year && year <= max]
 filmsInPeriod films min max =  filter (\(Film name cast year fans) -> (min <= year && year <= max)) films
-    -- putStrLn $ filmsAsString  $ filmsInPeriod testDatabase 2010 2015
 
 addFan :: Film -> String -> Film
 addFan (Film name cast year fans) fan = (Film name cast year (fan:fans))
 
+--deleteFilm :: [Film] -> String -> [Film]
+--deleteFilm films filmToDelete = deleteBy (\(Film name cast year fans) -> (name == filmToDelete)) filmToDelete films
+
 -- VI allow a user to say they are a fan of a particular film
 becomeFilmFan :: [Film] -> String -> String -> [Film]
 becomeFilmFan films film fan = addFilm films (addFan (findFilm films film) fan)
-    --(extract fan list in new Film) . findFilm films film : (film without target)
---Extract fans, append, put back
+--becomeFilmFan films film fan = deleteBy (\(Film name cast year fans) -> name == film) film (addFilm films (addFan (findFilm films film) fan))
 --becomeFilmFan testDatabase "Casino Royale" "Me"
 
 
--- VII. give the average number of fans for the films starring a particular actor
 fanAverage:: [Film] -> String -> Float
 fanAverage films actor = average [length $ fans | (Film name cast year fans) <- films, elem actor cast] 
     where average fanList = fromIntegral ( sum fanList) / fromIntegral ( length fanList)
 --putStrLn $ show $ fanAverage testDatabase "Daniel Craig"
 
 
--- VIII. give (without duplicates) the names of actors who have co-starred in at least one film with a particular actor
 coStarsOf :: [Film] -> String -> [String]
 coStarsOf [] actor = []
 coStarsOf ((Film name cast year fans) : films) actor = nub $ filmCoStars cast actor ++ coStarsOf films actor
-
--- putStrLn $ show $coStarsOf testDatabase "Daniel Craig"
-
 
 filmCoStars :: Cast -> String -> Cast
 -- co-Stars of given actor or [] if not staring actor
@@ -114,8 +109,10 @@ demo 4   = putStrLn $ wordsToString $ allFansOf testDatabase "Titanic"
 --              putStrLn all fans of Titanic
 demo 5   = putStrLn $ filmsAsString  $ filmsInPeriod testDatabase 2010 2013
 --              putStrLn all films between 2010 and 2013
---demo 6   = putStrLn all films after "Zoe" says she is a fan of "The Reader"
---demo 66  = putStrLn all films after "Zoe" says she is a fan of "Skyfall"
+demo 6   = putStrLn $ filmsAsString $ becomeFilmFan testDatabase "The Reader" "Zoe"
+                --putStrLn all films after "Zoe" says she is a fan of "The Reader"
+demo 66  = putStrLn $ filmsAsString $ becomeFilmFan testDatabase "Skyfall" "Zoe"
+                --putStrLn all films after "Zoe" says she is a fan of "Skyfall"
 demo 7   = putStrLn $ show $ fanAverage testDatabase "Tom Hanks"
 --              putStrLn average number of fans for films starring "Tom Hanks"
 demo 8   = putStrLn $ show $coStarsOf testDatabase "Tom Hanks"
@@ -189,6 +186,12 @@ menu filmList = do
             max <- getInt "Choose maximum year: "
             putStrLn $ filmsAsString $ filmsInPeriod filmList min max
             menu filmList
+
+        "6" -> do
+            film <- getString "Choose a film: "
+            fanName <- getString "What is your name: "
+            let newList = becomeFilmFan testDatabase film fanName
+            menu newList
 
         "7" -> do
             actor <- getString "Choose an actor: "
